@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/icons.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/app.min.css')}}">
+    <title>Add Medical Record</title>
+
+    <script>
+        function generateRandomString(length) {
+            const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        // Set the value of the input field with the generated random string when the page is loaded
+        window.addEventListener("load", function () {
+            const inputElement = document.querySelector('input[name="mdr_number"]');
+            if (inputElement) {
+                const randomString = generateRandomString(5);
+                inputElement.value = randomString;
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <nav>
+            <div class="navbar-custom">
+                
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="65" width="250">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="40" width="80">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="false" aria-expanded="false">
+                            Create New
+                            <i class="mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Menu items for creating new entries -->
+                            <a href="/add_emp" class="dropdown-item">
+                                <i class="fe-users mr-1"></i>
+                                <span>Employee</span>
+                            </a>
+                            <a href="/add_patient" class="dropdown-item">
+                                <i class="fe-activity mr-1"></i>
+                                <span>Patient</span>
+                            </a>
+                            <a href="/medical_record" class="dropdown-item">
+                                <i class="fe-list mr-1"></i>
+                                <span>Medical Report</span>
+                            </a>
+                            <!-- More menu items can be added as needed -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- end Topbar -->
+
+        <!-- Left Sidebar Start -->
+        <aside>
+            <!-- Include sidebar -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/">
+                                    <i class="fe-airplay"></i>
+                                    <span> Dashboard </span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fab fa-accessible-icon "></i>
+                                    <span> Patients </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_patient">Register Patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_patient">Manage Patients</a>
+                                    </li>
+                                    <hr>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-doctor"></i>
+                                    <span> Employees </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_emp">Add Employee</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_employee">Manage Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-share"></i>
+                                    <span> Reporting </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/inpatient">InPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/outpatient">OutPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employee_record">Employee Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-file-text"></i>
+                                    <span> Medical Records </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_medical_record">Add Medical Record</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_medical_record">Manage Medical Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+        </aside>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content -->
+                <div class="container-fluid">
+
+                    <!-- Start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="/add_medical_record">Medical Records</a>
+                                        </li>
+                                        <li class="breadcrumb-item active">Add Medical Record</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Add Medical Record</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End page title -->
+
+                    <!-- Form row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title">Fill all fields</h4>
+                                    <!-- Add Patient Form -->
+                                    <form method="post" action="/medical_records"  enctype="multipart/form-data">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label class="col-form-label">Patient Name</label>
+                                                <input type="text" readonly name="mdr_pat_name"
+                                                    value="{{ patient.pat_fname }} {{ patient.pat_lname }}"
+                                                    class="form-control" placeholder="Patient's Name">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label class="col-form-label">Patient Age</label>
+                                                <input type="text" readonly name="mdr_pat_age"
+                                                    value="{{ patient.pat_age }}" class="form-control"
+                                                    placeholder="Patient's Age">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label class="col-form-label">Patient Address</label>
+                                                <input type="text" readonly name="mdr_pat_adr"
+                                                    value="{{ patient.pat_addr }}" class="form-control"
+                                                    placeholder="Patient's Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label class="col-form-label">Patient Number</label>
+                                                <input type="text" readonly name="mdr_pat_number"
+                                                    value="{{ patient.pat_number }}" class="form-control"
+                                                    placeholder="Patient Number">
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label class="col-form-label">Patient Ailment</label>
+                                                <input type="text" readonly name="mdr_pat_ailment"
+                                                    value="{{ patient.pat_ailment }}" class="form-control"
+                                                    placeholder="Patient's Ailment">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputState" class="col-form-label">Patient's Type</label>
+                                                <select id="inputState" readonly required="required" name="mdr_pat_type"
+                                                    class="form-control">
+                                                    <option>Choose</option>
+                                                    <option value="InPatient" {% if patient.pat_type=="InPatient"
+                                                        %}selected{% endif %}>InPatient</option>
+                                                    <option value="OutPatient" {% if patient.pat_type=="OutPatient"
+                                                        %}selected{% endif %}>OutPatient</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label class="col-form-label">Patient Phone</label>
+                                                <input type="text" readonly name="mdr_pat_phone"
+                                                    value="{{ patient.pat_phone }}" class="form-control"
+                                                    placeholder="Patient's Phone">
+                                            </div>
+
+                                            <div class="form-group col-md-2" style="display:none">
+                                                <label for="inputZip" class="col-form-label">Patient Gender</label>
+                                                <input type="text" name="mdr_pat_gender"
+                                                    value="{{ patient.pat_gender }}" class="form-control" id="inputZip">
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-2" style="display:none">
+                                                <label class="col-form-label">Medical Record Number</label>
+                                                <input type="text" name="mdr_number" class="form-control">
+                                            </div>
+
+
+                                            <div class="form-group col-md-6">
+                                                <label class="col-form-label">Patient's Prescription</label>
+                                                <input required="required" type="file" name="mdr_pat_prescr"
+                                                    class="form-control" id="mdr_pat_prescr">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <button type="submit" name="add_patient_mdr"
+                                                class="ladda-button btn btn-primary" data-style="expand-right">Add
+                                                Patient Medical Record</button>
+                                        </div>
+
+                                    </form>
+                                    <!-- End Patient Form -->
+                                </div> <!-- End card-body -->
+                            </div> <!-- End card -->
+                        </div> <!-- End col -->
+                    </div> <!-- End row -->
+
+                </div> <!-- End container -->
+
+            </div> <!-- End content -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>MedVision</h4>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div> <!-- End content-page -->
+
+    </div> <!-- END wrapper -->
+
+    <!-- Right bar overlay -->
+    <div class="rightbar-overlay"></div>
+    <script src="{{ url_for('static',filename='//cdn.ckeditor.com/4.6.2/basic/ckeditor.js')}}"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+
+    <!-- Vendor js -->
+    <script src="{{ url_for('static',filename='assets/js/vendor.min.js')}}"></script>
+
+    <!-- App js-->
+    <script src="{{ url_for('static',filename='assets/js/app.min.js')}}"></script>
+
+    <!-- Loading buttons js -->
+    <script src="{{ url_for('static',filename='assets/libs/ladda/spin.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/libs/ladda/ladda.js')}}"></script>
+
+    <!-- Buttons init js-->
+    <script src="{{ url_for('static',filename='assets/js/pages/loading-btn.init.js')}}"></script>
+
+</body>
+
+</html>

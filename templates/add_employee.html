@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee Details</title>
+    <!-- CSS Links -->
+    <link href="{{ url_for('static',filename='assets/libs/flatpickr/flatpickr.min.css')}}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ url_for('static',filename='assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='assets/libs/ladda/ladda-themeless.min.css')}}" rel="stylesheet"
+        type="text/css" />
+
+    <script>
+        function generateRandomString(length) {
+            const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        // Set the value of the input field with the generated random string when the page is loaded
+        window.addEventListener("load", function () {
+            const inputElement = document.querySelector('input[name="doc_number"]');
+            if (inputElement) {
+                const randomString = generateRandomString(5);
+                inputElement.value = randomString;
+            }
+        });
+
+        function validateForm() {
+            var fname = document.forms["patientForm"]["doc_fname"].value;
+            var lname = document.forms["patientForm"]["doc_lname"].value;
+            var email = document.forms["patientForm"]["doc_email"].value;
+            var phone = document.forms["patientForm"]["doc_phone"].value;
+            var dept = document.forms["patientForm"]["doc_dept"].value;
+
+            var namePattern = /^[a-zA-Z\s]+$/;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var phonePattern = /^\d{10}$/;
+
+            if (!fname) {
+                alert("First Name must be filled out");
+                return false;
+            }
+            if (!namePattern.test(fname)) {
+                alert("First Name must contain only letters");
+                return false;
+            }
+            if (!lname) {
+                alert("Last Name must be filled out");
+                return false;
+            }
+            if (!namePattern.test(lname)) {
+                alert("Last Name must contain only letters");
+                return false;
+            }
+            if (!email) {
+                alert("Email must be filled out");
+                return false;
+            }
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address");
+                return false;
+            }
+            if (!phone) {
+                alert("Phone Number must be filled out");
+                return false;
+            }
+            if (!phonePattern.test(phone)) {
+                alert("Phone Number must be a 10-digit number");
+                return false;
+            }
+            if (!dept) {
+                alert("Department must be filled out");
+                return false;
+            }
+            if (!namePattern.test(dept)) {
+                alert("Department must contain only letters");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div id="wrapper">
+        <!-- Topbar Start -->
+        <nav>
+            <div class="navbar-custom">
+                
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="65" width="250">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="40" width="80">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="false" aria-expanded="false">
+                            Create New
+                            <i class="mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Menu items for creating new entries -->
+                            <a href="/add_emp" class="dropdown-item">
+                                <i class="fe-users mr-1"></i>
+                                <span>Employee</span>
+                            </a>
+                            <a href="/add_patient" class="dropdown-item">
+                                <i class="fe-activity mr-1"></i>
+                                <span>Patient</span>
+                            </a>
+                            <a href="his_admin_add_medical_record.html" class="dropdown-item">
+                                <i class="fe-list mr-1"></i>
+                                <span>Medical Report</span>
+                            </a>
+                            <!-- More menu items can be added as needed -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End Topbar -->
+
+        <!-- Left Sidebar -->
+        <aside>
+            <!-- Include sidebar -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/">
+                                    <i class="fe-airplay"></i>
+                                    <span> Dashboard </span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fab fa-accessible-icon "></i>
+                                    <span> Patients </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_patient">Register Patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_patient">Manage Patients</a>
+                                    </li>
+                                    <hr>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-doctor"></i>
+                                    <span> Employees </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_emp">Add Employee</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_employee">Manage Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-share"></i>
+                                    <span> Reporting </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/inpatient">InPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/outpatient">OutPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employee_record">Employee Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-file-text"></i>
+                                    <span> Medical Records </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_medical_record">Add Medical Record</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_medical_record">Manage Medical Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+        </aside>
+        <!-- End Left Sidebar -->
+
+        <!-- Start Page Content -->
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Employee</a></li>
+                                        <li class="breadcrumb-item active">Add Employee</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Add Employee Details</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <!-- Form row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title">Fill all fields</h4>
+                                    <!--Add Patient Form-->
+                                    <!-- <form method="post"> -->
+                                    <form method="post" name="patientForm" action="/add_emp"
+                                        onsubmit="return validateForm()">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">First Name</label>
+                                                <input type="text" required="required" name="doc_fname"
+                                                    class="form-control" autocomplete="off" id="inputEmail4" placeholder="Employee's First Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">Last Name</label>
+                                                <input required="required" type="text" name="doc_lname"
+                                                    class="form-control" autocomplete="off" id="inputPassword4" placeholder="Employee's Last Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">Mobile Number</label>
+                                                <input type="text" required="required" name="doc_phone"
+                                                    class="form-control" autocomplete="off" id="inputEmail4" placeholder="Employee's Mobile Number">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputAddress" class="col-form-label">Email</label>
+                                                <input required="required" type="email" class="form-control"
+                                                    name="doc_email" autocomplete="off" id="inputAddress" placeholder="Employee's Email">
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="form-group">
+                                            <label for="inputDept" class="col-form-label">Department</label>
+                                            <input required="required" type="text" class="form-control" name="doc_dept"
+                                                id="inputDept" autocomplete="off" placeholder="Employee's Department">
+
+                                            <div class="form-group col-md-2" style="display:none">
+                                                <label for="inputZip" class="col-form-label">Employee Number</label>
+                                                <input type="text" name="doc_number" class="form-control" id="inputZip">
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputCity" class="col-form-label">Password</label>
+                                                <input required="required" type="password" name="doc_pwd"
+                                                    class="form-control" id="inputCity">
+                                            </div>
+
+                                        </div> -->
+
+                                        <button type="submit" name="add_doc" class="ladda-button btn btn-success"
+                                            data-style="expand-right">Add Employee</button>
+
+                                    </form>
+                                    <!--End Patient Form-->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <!-- Content End -->
+        </div>
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>MedVision</h4>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+    </div>
+    <!-- End Page Content -->
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Right Sidebar Overlay -->
+    <div class="rightbar-overlay"></div>
+
+    <!-- Vendor JS -->
+    <script src="{{ url_for('static',filename='assets/js/vendor.min.js')}}"></script>
+
+    <!-- App JS -->
+    <script src="{{ url_for('static',filename='assets/js/app.min.js')}}"></script>
+
+    <!-- Loading Buttons JS -->
+    <script src="{{ url_for('static',filename='assets/libs/ladda/spin.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/libs/ladda/ladda.js')}}"></script>
+
+    <!-- Buttons Init JS -->
+    <script src="{{ url_for('static',filename='assets/js/pages/loading-btn.init.js')}}"></script>
+</body>
+
+</html>

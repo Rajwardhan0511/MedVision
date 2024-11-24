@@ -1,0 +1,64 @@
+
+body {
+    background-color: #1b1b1b !important;
+    font-family: Arial, sans-serif !important;
+    color: rgb(200, 200, 200) !important;
+}
+
+.footer {
+    margin-top: 100px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgb(0, 4, 41);
+    color: #fff;
+}
+
+.accordion-button {
+    background-color: #212529;
+    color: #fff;
+}
+
+/* .accordion-body {
+    background-color:#1b1b1b;
+
+} */
+
+.accordion-body a{
+    background-color: black;
+    padding: 10px 18px;
+    text-decoration: none;
+    font-weight: bold;
+    color: bisque;
+    display: inline-block;
+    margin: 30px 0;
+    border-radius: 5px;
+}
+
+.accordion-button:not(.collapsed)::before, ::after {
+    filter: brightness(0%) invert(100%)
+}
+
+/* ashvincode */
+.images{
+    width: 45%;
+    height: 80%;
+    position: absolute;
+    bottom: 0%;
+    right: 100px;
+}
+.images img{
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    transition: bottom 1s ,left 1s;
+}
+.images:hover .shape{
+    bottom: 40px;
+   
+}
+.images:hover .col-sm-8{
+    left: 40%;
+}

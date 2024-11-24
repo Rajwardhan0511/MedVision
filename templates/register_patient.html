@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS links remain the same -->
+    <link href="{{ url_for('static',filename='assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <title>Add Patient Details</title>
+
+    <script>
+        // Function to generate a random alphanumeric string
+        function generateRandomString(length) {
+            const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        // Set the value of the input field with the generated random string when the page is loaded
+        window.addEventListener("load", function () {
+            const inputElement = document.querySelector('input[name="pat_number"]');
+            if (inputElement) {
+                const randomString = generateRandomString(5);
+                inputElement.value = randomString;
+            }
+        });
+
+        function validateForm() {
+            // Get form inputs
+            var fname = document.forms["patientForm"]["pat_fname"].value;
+            var lname = document.forms["patientForm"]["pat_lname"].value;
+            var dob = document.forms["patientForm"]["pat_dob"].value;
+            var age = document.forms["patientForm"]["pat_age"].value;
+            var addr = document.forms["patientForm"]["pat_addr"].value;
+            var phone = document.forms["patientForm"]["pat_phone"].value;
+            var ailment = document.forms["patientForm"]["pat_ailment"].value;
+            var type = document.forms["patientForm"]["pat_type"].value;
+            var gender = document.forms["patientForm"]["pat_gender"].value;
+
+            var letters = /^[A-Za-z]+$/;
+            var dobRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+            var phoneRegex = /^\d{10}$/;
+            var ageRegex = /^\d{1,3}$/;
+
+            if (fname == "") {
+                alert("First name must be filled out");
+                return false;
+            }
+            if (!fname.match(letters)) {
+                alert("First name must contain only letters");
+                return false;
+            }
+            if (lname == "") {
+                alert("Last name must be filled out");
+                return false;
+            }
+            if (!lname.match(letters)) {
+                alert("Last name must contain only letters");
+                return false;
+            }
+            if (dob == "") {
+                alert("Date of Birth must be filled out");
+                return false;
+            }
+            if (!dob.match(dobRegex)) {
+                alert("Invalid Date of Birth format. Please use DD/MM/YYYY");
+                return false;
+            }
+            // Check if the entered date is valid
+            var parts = dob.split('/');
+            var day = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var year = parseInt(parts[2], 10);
+
+            if (year < 1900 || year > new Date().getFullYear()) {
+                alert("Invalid year. Please enter a year between 1900 and " + new Date().getFullYear());
+                return false;
+            }
+
+            var maxDay = new Date(year, month, 0).getDate();
+            if (day <= 0 || day > maxDay) {
+                alert("Invalid day for the selected month/year");
+                return false;
+            }
+
+            if (month <= 0 || month > 12) {
+                alert("Invalid month");
+                return false;
+            }
+
+            var currentDate = new Date();
+            var selectedDate = new Date(year, month - 1, day);
+            if (selectedDate > currentDate) {
+                alert("Date of Birth cannot be in the future");
+                return false;
+            }
+
+            if (!age.match(ageRegex)) {
+                alert("Age must be a number between 1 and 3 digits");
+                return false;
+            }
+            if (addr == "") {
+                alert("Address must be filled out");
+                return false;
+            }
+            if (phone == "") {
+                alert("Mobile number must be filled out");
+                return false;
+            }
+            if (!phone.match(phoneRegex)) {
+                alert("Mobile number must be 10 digits");
+                return false;
+            }
+            if (type == "Choose") {
+                alert("Please select patient type");
+                return false;
+            }
+
+            if (gender == "Choose") {
+                alert("Please select patient gender");
+                return false;
+            }
+            return true;
+        }
+
+        function submitToDestination1() {
+            // Code to submit form data to the first destination
+            document.patientForm.action = "/add";
+            document.patientForm.submit();
+        }
+
+        function submitToDestination2() {
+            // Code to submit form data to the second destination
+            // You can modify the form action and submit it again
+            document.patientForm.action = "/add_patient";
+            document.patientForm.submit();
+        }
+
+        function copyFormData() {
+        // Copy input values from Form 1 to Form 2
+        document.querySelector('input[name="pat_fname"]').value = document.querySelector('input[name="pat_fname_h"]').value;
+        document.querySelector('input[name="pat_lname"]').value = document.querySelector('input[name="pat_lname_h"]').value;
+        document.querySelector('input[name="pat_dob"]').value = document.querySelector('input[name="pat_dob_h"]').value;
+        document.querySelector('input[name="pat_age"]').value = document.querySelector('input[name="pat_age_h"]').value;
+        document.querySelector('input[name="pat_addr"]').value = document.querySelector('input[name="pat_addr_h"]').value;
+        document.querySelector('input[name="pat_phone"]').value = document.querySelector('input[name="pat_phone_h"]').value;
+        document.querySelector('input[name="pat_number"]').value = document.querySelector('input[name="pat_number_h"]').value;
+        document.querySelector('input[name="pat_type"]').value = document.querySelector('input[name="pat_type_h"]').value;
+        document.querySelector('input[name="pat_ailment"]').value = document.querySelector('input[name="pat_ailment_h"]').value;
+        // Copy more input values as needed...
+
+        // Display Form 2
+        document.querySelector('form[name="patientForm"]').style.display = 'block';
+
+        // Submit Form 2
+        document.querySelector('form[name="patientForm"]').submit();
+    }
+    </script>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <nav>
+            <div class="navbar-custom">
+                
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="65" width="250">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="40" width="80">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="false" aria-expanded="false">
+                            Create New
+                            <i class="mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Menu items for creating new entries -->
+                            <a href="/add_emp" class="dropdown-item">
+                                <i class="fe-users mr-1"></i>
+                                <span>Employee</span>
+                            </a>
+                            <a href="/add_patient" class="dropdown-item">
+                                <i class="fe-activity mr-1"></i>
+                                <span>Patient</span>
+                            </a>
+                            <a href="his_admin_add_medical_record.html" class="dropdown-item">
+                                <i class="fe-list mr-1"></i>
+                                <span>Medical Report</span>
+                            </a>
+                            <!-- More menu items can be added as needed -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <aside>
+            <!-- Include sidebar -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/">
+                                    <i class="fe-airplay"></i>
+                                    <span> Dashboard </span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fab fa-accessible-icon "></i>
+                                    <span> Patients </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_patient">Register Patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_patient">Manage Patients</a>
+                                    </li>
+                                    <hr>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-doctor"></i>
+                                    <span> Employees </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_emp">Add Employee</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_employee">Manage Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-share"></i>
+                                    <span> Reporting </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/inpatient">InPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/outpatient">OutPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employee_record">Employee Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-file-text"></i>
+                                    <span> Medical Records </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_medical_record">Add Medical Record</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_medical_record">Manage Medical Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+        </aside>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Patients</a></li>
+                                        <li class="breadcrumb-item active">Add Patient</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Add Patient Details</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <!-- Form row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title">Fill all fields</h4>
+                                    <!--Add Patient Form-->
+                                    <!-- <form method="post"> -->
+                                    <form method="post" name="patientForm" action="/add" onsubmit="return validateForm()">
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputEmail4" class="col-form-label">First Name</label>
+                                                <input type="text" required="required" name="pat_fname"
+                                                    class="form-control" autocomplete="off" id="inputEmail4"
+                                                    placeholder="Patient's First Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPassword4" class="col-form-label">Last Name</label>
+                                                <input required="required" type="text" name="pat_lname"
+                                                    class="form-control" autocomplete="off" id="inputPassword4"
+                                                    placeholder="Patient`s Last Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="inputEmail4" class="col-form-label">Date Of Birth</label>
+                                                <input type="text" required="required" name="pat_dob"
+                                                    class="form-control" autocomplete="off" id="inputEmail4" placeholder="DD/MM/YYYY">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputPassword4" class="col-form-label">Age</label>
+                                                <input required="required" type="text" name="pat_age"
+                                                    class="form-control" autocomplete="off" id="inputPassword4"
+                                                    placeholder="Patient`s Age">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="inputState" class="col-form-label">Gender</label>
+                                                <select id="inputState" required="required" name="pat_gender"
+                                                    class="form-control">
+                                                    <option>Choose</option>
+                                                    <option>Male</option>
+                                                    <option>Female</option>
+                                                    <option>Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputAddress" class="col-form-label">Address</label>
+                                            <input required="required" type="text" class="form-control" name="pat_addr"
+                                                id="inputAddress" autocomplete="off" placeholder="Patient's Addresss">
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="inputCity" class="col-form-label">Mobile Number</label>
+                                                <input required="required" type="text" name="pat_phone"
+                                                    class="form-control" autocomplete="off" id="inputCity" placeholder="Patient's Mobile Number">
+                                            </div>
+
+                                            <div class="form-group col-md-2" style="display:none">
+                                                <label for="inputZip" class="col-form-label">Patient Number</label>
+                                                <input type="text" name="pat_number" class="form-control" id="inputZip">
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="inputState" class="col-form-label">Patient's Type</label>
+                                                <select id="inputState" required="required" name="pat_type"
+                                                    class="form-control">
+                                                    <option>Choose</option>
+                                                    <option>InPatient</option>
+                                                    <option>OutPatient</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label for="inputCity" class="col-form-label">Patient Ailment</label>
+                                                <input required="required" type="text" name="pat_ailment"
+                                                    class="form-control" autocomplete="off" id="inputCity" placeholder="Patient's Ailment">
+                                            </div>
+
+                                            <!-- <div class="form-group col-md-2" style="display:none">
+                                                <?php 
+                                                    $length = 5;    
+                                                    $patient_number =  substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'),1,$length);
+                                                ?>
+                                                <label for="inputZip" class="col-form-label">Patient Number</label>
+                                                <input type="text" name="pat_number"
+                                                    value="<?php echo $patient_number;?>" class="form-control"
+                                                    id="inputZip">
+                                            </div> -->
+
+                                        </div>
+
+                                        <!-- <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <form  method="post">
+                                                    <button style="width: 232px;margin-top: 20px;font-size: 20px;" class='btn btn-dark'>Add New User</button>
+                                                </form>
+                                            </div>  onclick="copyFormData()"
+                                        </div> -->
+
+                                        <button type="submit" name="add_face"
+                                            class="ladda-button btn btn-primary" data-style="expand-right">Add
+                                            Face</button>
+
+                                    </form>
+                                    <!--End Patient Form-->
+                                    <!-- <form method="post" name="patientForm" action="/add_patient"
+                                        onsubmit="return validateForm()" style="display: none;">
+
+                                        <input type="hidden" name="pat_fname">
+                                        <input type="hidden" name="pat_lname">
+                                        <input type="hidden" name="pat_dob">
+                                        <input type="hidden" name="pat_age">
+                                        <input type="hidden" name="pat_addr">
+                                        <input type="hidden" name="pat_phone">
+                                        <input type="hidden" name="pat_number">
+                                        <input type="hidden" name="pat_type">
+                                        <input type="hidden" name="pat_ailment">
+
+
+
+                                        <button type="submit" name="add_patient" onclick="copyFormData()"
+                                            class="ladda-button btn btn-primary" data-style="expand-right">Add
+                                            Patient</button>
+                                    </form> -->
+                                </div> <!-- end card-body -->
+                            </div> <!-- end card-->
+                        </div> <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>MedVision</h4>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+        </div> <!-- end content-page -->
+
+    </div> <!-- end wrapper -->
+
+    <!-- JavaScript links remain the same -->
+    <script src="{{ url_for('static',filename='assets/js/vendor.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/js/app.min.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/libs/ladda/spin.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/libs/ladda/ladda.js')}}"></script>
+    <script src="{{ url_for('static',filename='assets/js/pages/loading-btn.init.js')}}"></script>
+</body>
+
+</html>

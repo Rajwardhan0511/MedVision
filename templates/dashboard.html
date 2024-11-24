@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MedVision Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/app.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/icons.min.css')}}">
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <nav>
+            <div class="navbar-custom">
+                <!-- <ul class="list-unstyled topnav-menu float-right mb-0">
+                    <li class="d-none d-sm-block">
+                        <form class="app-search">
+                            <div class="app-search-box">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button class="btn" type="submit">
+                                            <i class="fe-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+
+                    <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                 Placeholder for user data 
+                            <img src="{{ url_for('static',filename='assets/images/users/user_placeholder.jpg')}}"
+                                alt="User" class="rounded-circle">
+                            <span class="pro-user-name ml-1">
+                                User Name <i class="mdi mdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                 Placeholder for user-related actions 
+                            <a href="#" class="dropdown-item notify-item">
+                                <i class="fe-log-out"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul> -->
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="65" width="250">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="40" width="80">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="false" aria-expanded="false">
+                            Create New
+                            <i class="mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Menu items for creating new entries -->
+                            <a href="/add_emp" class="dropdown-item">
+                                <i class="fe-users mr-1"></i>
+                                <span>Employee</span>
+                            </a>
+                            <a href="/add_patient" class="dropdown-item">
+                                <i class="fe-activity mr-1"></i>
+                                <span>Patient</span>
+                            </a>
+                            <a href="/medical_record" class="dropdown-item">
+                                <i class="fe-list mr-1"></i>
+                                <span>Medical Report</span>
+                            </a>
+                            <!-- More menu items can be added as needed -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <aside>
+            <!-- Include sidebar -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/">
+                                    <i class="fe-airplay"></i>
+                                    <span> Dashboard </span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fab fa-accessible-icon "></i>
+                                    <span> Patients </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_patient">Register Patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_patient">Manage Patients</a>
+                                    </li>
+                                    <hr>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-doctor"></i>
+                                    <span> Employees </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_emp">Add Employee</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_employee">Manage Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-share"></i>
+                                    <span> Reporting </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/inpatient">InPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/outpatient">OutPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employee_record">Employee Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-file-text"></i>
+                                    <span> Medical Records </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_medical_record">Add Medical Record</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_medical_record">Manage Medical Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+        </aside>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content -->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">MedVision Dashboard</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <!-- OutPatients -->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="widget-rounded-circle card-box">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-lg rounded-circle bg-soft-primary border border-primary">
+                                            <div class="avatar-title text-primary">
+                                                <i class="fab fa-accessible-icon font-22"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark mt-1"><span>{{ outpatient_count }}</span></h3>
+                                            <!-- Placeholder for outpatient count -->
+                                            <p class="text-muted mb-1 text-truncate">Out Patients</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End OutPatients -->
+
+                        <!-- InPatients -->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="widget-rounded-circle card-box">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                                            <i class="mdi mdi-hotel   font-22 avatar-title text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark mt-1"><span>{{ inpatient_count }}</span></h3>
+                                            <!-- Placeholder for inpatient count -->
+                                            <p class="text-muted mb-1 text-truncate">In Patients</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End InPatients -->
+
+                        <!-- Employees -->
+                        <div class="col-md-6 col-xl-4">
+                            <div class="widget-rounded-circle card-box">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                                            <i class="mdi mdi-doctor font-22 avatar-title text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-right">
+                                            <h3 class="text-dark mt-1"><span>{{ employee_count }}</span></h3>
+                                            <!-- Placeholder for employee count -->
+                                            <p class="text-muted mb-1 text-truncate">Hospital Employees</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Employees -->
+                    </div>
+
+                    <div class="row">
+                        <a style="text-decoration: none;max-width: 300px;" href="/start">
+                            <button
+                                style="font-size: 24px;font-weight: bold;border-radius: 10px;width:490px;padding: 10px;margin-top: 30px;margin-bottom: 30px;"
+                                type='submit' class='btn btn-primary'>Open camera<i class="material-icons"></i></button>
+                        </a>
+                    </div>
+
+
+
+                    <!-- Recently Employed Employees -->
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card-box">
+                                <h4 class="header-title mb-3">Hospital Employees</h4>
+
+                                <div class="table-responsive">
+                                    <table class="table table-borderless table-hover table-centered m-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Number</th>
+                                                <th>Mobile No.</th>
+                                                <th>Email</th>
+                                                <th>Department</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for employee in employees|reverse %}
+                                            <tr>
+                                                <td>{{ employee.doc_fname }} {{ employee.doc_lname }}</td>
+                                                <td>{{ employee.doc_number }}</td>
+                                                <td>{{ employee.doc_phone }}</td>
+                                                <td>{{ employee.doc_email }}</td>
+                                                <td>{{ employee.doc_dept }}</td>
+                                                <td>
+                                                    <a href="{{ url_for('view_employee', doc_number=employee.doc_number) }}"
+                                                        class="badge badge-success"><i class="mdi mdi-eye"></i> View</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <script>
+                                        $(document).ready(function () {
+                                            $.getJSON("{{ url_for('start') }}", function (data) {
+                                                if (data.new_patient) {
+                                                    let newRow = `
+                                                        <tr>
+                                                            <td>{{ l+1 if l else 1 }}</td>
+                                                            <td>${data.new_patient.pat_fname}</td>
+                                                            <td>${data.new_patient.pat_number}</td>
+                                                            <td>${data.new_patient.pat_phone}</td>
+                                                            <td>${data.new_patient.pat_type}</td>
+                                                            <td><a href="${data.redirect_url}">View</a></td>
+                                                        </tr>
+                                                    `;
+                                                    $('#patientTableBody').append(newRow);
+                                                    setTimeout(function () {
+                                                        window.location.href = data.redirect_url;
+                                                    }, 1000); // Redirect after 1 second
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+                    </div> <!-- end row -->
+
+                </div> <!-- end container -->
+
+            </div> <!-- end content -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>MedVision</h4>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div> <!-- end wrapper -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- Vendor js -->
+        <script src="{{ url_for('static',filename='assets/js/vendor.min.js')}}"></script>
+        <!-- App js -->
+        <script src="{{ url_for('static',filename='assets/js/app.min.js')}}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<nav>
+    <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-right mb-0">
+            <li class="d-none d-sm-block">
+                <form class="app-search">
+                    <div class="app-search-box">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <button class="btn" type="submit">
+                                    <i class="fe-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+
+            <li class="dropdown notification-list">
+                <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+                    data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                    aria-expanded="false">
+                    <!-- Placeholder for user data -->
+                    <img src="{{ url_for('static',filename='assets/images/users/user_placeholder.jpg')}}" alt="User" class="rounded-circle">
+                    <span class="pro-user-name ml-1">
+                        User Name <i class="mdi mdi-chevron-down"></i>
+                    </span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                    <!-- Placeholder for user-related actions -->
+                    <a href="#" class="dropdown-item notify-item">
+                        <i class="fe-log-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box">
+            <a href="/" class="logo text-center">
+                <span class="logo-lg">
+                    <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}" alt="MedVision Logo" height="65" width="250">
+                </span>
+                <span class="logo-sm">
+                    <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}" alt="MedVision Logo" height="40" width="80">
+                </span>
+            </a>
+        </div>
+
+        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+            <li>
+                <button class="button-menu-mobile waves-effect waves-light">
+                    <i class="fe-menu"></i>
+                </button>
+            </li>
+
+            <li class="dropdown d-none d-lg-block">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="false" aria-expanded="false">
+                    Create New
+                    <i class="mdi mdi-chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <!-- Menu items for creating new entries -->
+                    <a href="/add_emp" class="dropdown-item">
+                        <i class="fe-users mr-1"></i>
+                        <span>Employee</span>
+                    </a>
+                    <a href="/add_patient" class="dropdown-item">
+                        <i class="fe-activity mr-1"></i>
+                        <span>Patient</span>
+                    </a>
+                    <a href="/medical_record" class="dropdown-item">
+                        <i class="fe-list mr-1"></i>
+                        <span>Medical Report</span>
+                    </a>
+                    <!-- More menu items can be added as needed -->
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</nav>

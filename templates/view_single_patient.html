@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Include CSS and other head elements -->
+    <title>View Patient Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/icons.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/css/app.min.css')}}">
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <nav>
+            <div class="navbar-custom">
+       
+
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="/" class="logo text-center">
+                        <span class="logo-lg">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="65" width="250">
+                        </span>
+                        <span class="logo-sm">
+                            <img src="{{ url_for('static',filename='assets/images/medvision3.png')}}"
+                                alt="MedVision Logo" height="40" width="80">
+                        </span>
+                    </a>
+                </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li class="dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
+                            role="button" aria-haspopup="false" aria-expanded="false">
+                            Create New
+                            <i class="mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Menu items for creating new entries -->
+                            <a href="/add_emp" class="dropdown-item">
+                                <i class="fe-users mr-1"></i>
+                                <span>Employee</span>
+                            </a>
+                            <a href="/add_patient" class="dropdown-item">
+                                <i class="fe-activity mr-1"></i>
+                                <span>Patient</span>
+                            </a>
+                            <a href="/medical_record" class="dropdown-item">
+                                <i class="fe-list mr-1"></i>
+                                <span>Medical Report</span>
+                            </a>
+                            <!-- More menu items can be added as needed -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!-- end Topbar -->
+
+        <!-- Left Sidebar Start -->
+        <aside>
+            <!-- Include sidebar -->
+            <div class="left-side-menu">
+
+                <div class="slimscroll-menu">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+
+                        <ul class="metismenu" id="side-menu">
+
+                            <li class="menu-title">Navigation</li>
+
+                            <li>
+                                <a href="/">
+                                    <i class="fe-airplay"></i>
+                                    <span> Dashboard </span>
+                                </a>
+
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fab fa-accessible-icon "></i>
+                                    <span> Patients </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_patient">Register Patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_patient">Manage Patients</a>
+                                    </li>
+                                    <hr>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="mdi mdi-doctor"></i>
+                                    <span> Employees </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_emp">Add Employee</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_employee">Manage Employees</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-share"></i>
+                                    <span> Reporting </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/inpatient">InPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/outpatient">OutPatient Records</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employee_record">Employee Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="fe-file-text"></i>
+                                    <span> Medical Records </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href="/add_medical_record">Add Medical Record</a>
+                                    </li>
+                                    <li>
+                                        <a href="/manage_medical_record">Manage Medical Records</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Sidebar -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+        </aside>
+        <!-- Left Sidebar End -->
+
+        <!-- Start Page Content -->
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+
+                    <!-- Page Title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                        <li class="breadcrumb-item"><a href="/manage_patient">Patients</a></li>
+                                        <li class="breadcrumb-item active">View Patients</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">{{ patient.pat_fname }} {{ patient.pat_lname }}'s Profile</h4>
+                                <!-- Placeholder patient name -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end Page Title -->
+
+                    <!-- Profile Section -->
+                    <div class="row">
+                        <div class="col-lg-4 col-xl-4">
+                            <div class="card-box text-center">
+                                <img src="{{ url_for('static',filename='assets/images/users/patient.png')}}"
+                                    class="rounded-circle avatar-lg img-thumbnail" alt="Profile Image">
+                                <div class="text-left mt-3">
+                                    <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span
+                                            class="ml-2">{{ patient.pat_fname }} {{ patient.pat_lname }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Number :</strong> <span class="ml-2">{{
+                                            patient.pat_number }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Gender :</strong> <span class="ml-2">{{
+                                            patient.pat_gender }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Mobile :</strong> <span class="ml-2">{{
+                                            patient.pat_phone }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Address :</strong> <span class="ml-2">{{
+                                            patient.pat_addr }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Date Of Birth :</strong> <span
+                                            class="ml-2">{{ patient.pat_dob }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Age :</strong> <span class="ml-2">{{
+                                            patient.pat_age }}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Ailment :</strong> <span class="ml-2">{{
+                                            patient.pat_ailment }}</span></p>
+                                    <hr>
+                                    <p class="text-muted mb-2 font-13"><strong>Date Recorded :</strong> <span
+                                            class="ml-2">{{ patient.pat_date_join }}</span></p>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 col-xl-8">
+                            <div class="card-box">
+                                <ul class="nav nav-pills navtab-bg nav-justified">
+                                    <li class="nav-item">
+                                        <a href="#prescription" data-toggle="tab" class="nav-link active">
+                                            Prescription
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#vitals" data-toggle="tab" class="nav-link">
+                                            Vitals
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a href="#lab" data-toggle="tab" class="nav-link">
+                                            Lab Records
+                                        </a>
+                                    </li> -->
+                                </ul>
+
+                                <div class="tab-content">
+                                    <!-- Prescription Section -->
+                                    <div class="tab-pane show active" id="prescription">
+                                        <ul class="list-unstyled timeline-sm">
+                                            <li>
+                                                <a href="{{ url_for('add_single_patient_medical_record', pat_number=patient.pat_number) }}"
+                                                    class="badge badge-success"><i class="mdi mdi-pencil"></i> Add
+                                                    Medical Record</a>
+                                            </li>
+                                        </ul>
+                                        <ul class="list-unstyled timeline-sm">
+                                            {% for filename in prescription_files %}
+                                            <li><a href="{{ url_for('static', filename='patients/' + patient.pat_number + '/' + filename) }}"
+                                                    target="_blank">{{ filename }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                    <!-- end Prescription Section -->
+
+                                    <!-- Vitals Section -->
+                                    <div class="tab-pane" id="vitals">
+                                        <div class="table-responsive">
+                                            <div>
+                                                <a href="{{ url_for('vitals_patient', pat_number=patient.pat_number) }}"
+                                                    class="badge badge-info"><i class="mdi mdi-heart-pulse"></i>
+                                                    Add Vitals</a>
+                                            </div>
+                                            <hr>
+                                            <table class="table table-borderless mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Body Temperature</th>
+                                                        <th>Heart Rate/Pulse</th>
+                                                        <th>Respiratory Rate</th>
+                                                        <th>Blood Pressure</th>
+                                                        <th>Date Recorded</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for v in vitals %}
+                                                    <tr>
+                                                        <td>{{ v.body_temp }}°C</td>
+                                                        <td>{{ v.heart_rate }} BPM</td>
+                                                        <td>{{ v.resp_rate }} bpm</td>
+                                                        <td>{{ v.blood_pres }} mmHg</td>
+                                                        <td>{{ v.date }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- end Vitals Section -->
+
+                                    <!-- Lab Records Section -->
+                                    <!-- <div class="tab-pane" id="lab">
+                                        <ul class="list-unstyled timeline-sm">
+                                            <li class="timeline-sm-item">
+                                                <span class="timeline-sm-date">2024-01-01</span>
+                                                <h3 class="mt-0 mb-1">Blood Test</h3>
+                                                <hr>
+                                                <h5>Laboratory Tests</h5>
+                                                <p class="text-muted mt-2">Blood sugar and cholesterol levels.</p>
+                                                <hr>
+                                                <h5>Laboratory Results</h5>
+                                                <p class="text-muted mt-2">Normal.</p>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <!-- end Lab Records Section -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end Content -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>MedVision</h4>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- end Footer -->
+
+        </div>
+        <!-- End Wrapper -->
+
+        <!-- Right bar overlay -->
+        <div class="rightbar-overlay"></div>
+
+        <!-- Include JavaScript files -->
+        <script src="{{ url_for('static',filename='assets/js/vendor.min.js')}}"></script>
+        <script src="{{ url_for('static',filename='assets/js/app.min.js')}}"></script>
+
+</body>
+
+</html>
